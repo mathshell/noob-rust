@@ -1,4 +1,5 @@
 use std::io::{self, Write}; // On ajoute Write pour que print! s'affiche immédiatement
+mod sweetprint;
 
 fn main() {
     // 1. Utilisation de print! avec stdout().flush()
@@ -29,6 +30,7 @@ fn main() {
     if rep.trim() != "oui" {
         println!("AH! Oops .. :-(");
     } else {
-        println!("Bienvenue à vous {}", nom);
+        let accueil = sweetprint::sweetprint(nom, 20); //<-------------------------- Doit dabord etre dans une variable.
+        println!("{}",accueil);
     }
 }
