@@ -1,0 +1,1 @@
+/var/www/html/noob-rust/apocalypse/target/debug/apocalypse: /var/www/html/noob-rust/apocalypse/src/main.rs
