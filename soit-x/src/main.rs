@@ -1,4 +1,5 @@
-use std::io;
+use core::str;
+use std::{collections::hash_map::Values, io, iter};
 
 fn main() {
     println!("Hello, world!");
@@ -44,6 +45,36 @@ fn main() {
     };
 
     println!("Résultat : {}", resultat);
+}
+
+fn cleaninput(data: &str) -> Vec<(f64, Option<char>)> {
+    let mut cleaned = Vec::new(); // 1. Corrigé Vect -> Vec
+    let mut number = String::new();
+    let mut last_op: Option<char> = None; // 2. Corrigé Optionchar -> Option<char>
+
+    for iterator in data.chars() {
+        if iterator.is_ascii_digit() || iterator == '.' {
+            // Ajout du '.' pour gérer les nombres décimaux
+            number.push(iterator);
+        } else if matches!(iterator, '+' | '-' | '*' | '/' | '^') {
+            if !number.is_empty() {
+                let value = number.parse::<f64>().unwrap(); // 3. Corrigé parse::parse et unrap
+                cleaned.push((value, last_op)); // 4. Corrigé result -> cleaned
+                number.clear();
+            }
+            last_op = Some(iterator);
+        } else if iterator.is_whitespace() {
+            continue;
+        }
+    }
+
+    // 5. IMPORTANT : On n'oublie pas d'ajouter le tout dernier nombre après la boucle !
+    if !number.is_empty() {
+        let value = number.parse::<f64>().unwrap();
+        cleaned.push((value, last_op));
+    }
+
+    cleaned // 6. On retourne le vecteur
 }
 
 fn diviser(numerateur: f64, denominateur: f64) -> Option<f64> {
